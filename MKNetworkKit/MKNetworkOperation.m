@@ -1072,7 +1072,9 @@
     // if there was a cacheControl entity, we would have a expiresOnDate that is not nil.        
     // "Cache-Control" headers take precedence over "Expires" headers
     
-    expiresOn = [expiresOnDate rfc1123String];
+    if (expiresOnDate) {
+        expiresOn = [expiresOnDate rfc1123String];
+    }
     
     // now remember lastModified, eTag and expires for this request in cache
     if(expiresOn)
