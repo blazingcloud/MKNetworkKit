@@ -24,6 +24,7 @@
 //  THE SOFTWARE.
 
 #import "MKNetworkKit.h"
+#import "BZMultipartStream.h"
 
 #ifdef __OBJC_GC__
 #error MKNetworkKit does not support Objective-C Garbage Collection
@@ -74,8 +75,6 @@
 - (id)initWithURLString:(NSString *)aURLString
                  params:(NSMutableDictionary *)body
              httpMethod:(NSString *)method;
-
--(NSData*) bodyData;
 
 -(NSString*) encodedPostDataString;
 - (void) showLocalNotification;
@@ -702,74 +701,29 @@
   [self.filesToBePosted addObject:dict];    
 }
 
--(NSData*) bodyData {
-  
-  if([self.filesToBePosted count] == 0 && [self.dataToBePosted count] == 0) {
-    
-    return [[self encodedPostDataString] dataUsingEncoding:self.stringEncoding];
-  }
-  
-  NSString *boundary = @"0xKhTmLbOuNdArY";
-  NSMutableData *body = [NSMutableData data];
-  __block NSUInteger postLength = 0;    
-  
-  [self.fieldsToBePosted enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-    
-    NSString *thisFieldString = [NSString stringWithFormat:
-                                     @"--%@\r\nContent-Disposition: form-data; name=\"%@\"\r\n\r\n%@",
-                                 boundary, key, obj];
-    
-    [body appendData:[thisFieldString dataUsingEncoding:[self stringEncoding]]];
-    [body appendData:[@"\r\n" dataUsingEncoding:[self stringEncoding]]];
-  }];        
-  
-  [self.filesToBePosted enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-    
-    NSDictionary *thisFile = (NSDictionary*) obj;
-    NSString *thisFieldString = [NSString stringWithFormat:
-                                 @"--%@\r\nContent-Disposition: form-data; name=\"%@\"; filename=\"%@\"\r\nContent-Type: %@\r\nContent-Transfer-Encoding: binary\r\n\r\n",
-                                 boundary, 
-                                 [thisFile objectForKey:@"name"], 
-                                 [[thisFile objectForKey:@"filepath"] lastPathComponent], 
-                                 [thisFile objectForKey:@"mimetype"]];
-    
-    [body appendData:[thisFieldString dataUsingEncoding:[self stringEncoding]]];         
-    [body appendData: [NSData dataWithContentsOfFile:[thisFile objectForKey:@"filepath"]]];
-    [body appendData:[@"\r\n" dataUsingEncoding:[self stringEncoding]]];
-  }];
-  
-  [self.dataToBePosted enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-    
-    NSDictionary *thisDataObject = (NSDictionary*) obj;
-    NSString *thisFieldString = [NSString stringWithFormat:
-                                 @"--%@\r\nContent-Disposition: form-data; name=\"%@\"; filename=\"%@\"\r\nContent-Type: %@\r\nContent-Transfer-Encoding: binary\r\n\r\n",
-                                 boundary, 
-                                 [thisDataObject objectForKey:@"name"], 
-                                 [thisDataObject objectForKey:@"filename"], 
-                                 [thisDataObject objectForKey:@"mimetype"]];
-    
-    [body appendData:[thisFieldString dataUsingEncoding:[self stringEncoding]]];         
-    [body appendData:[thisDataObject objectForKey:@"data"]];
-    [body appendData:[@"\r\n" dataUsingEncoding:[self stringEncoding]]];
-  }];
-  
-  if (postLength >= 1)
-    [self.request setValue:[NSString stringWithFormat:@"%lu", postLength] forHTTPHeaderField:@"content-length"];
-  
-  [body appendData: [[NSString stringWithFormat:@"--%@--\r\n", boundary] dataUsingEncoding:self.stringEncoding]];
-  
-  NSString *charset = (__bridge NSString *)CFStringConvertEncodingToIANACharSetName(CFStringConvertNSStringEncodingToEncoding(self.stringEncoding));
-  
-  if(([self.filesToBePosted count] > 0) || ([self.dataToBePosted count] > 0)) {
-    [self.request setValue:[NSString stringWithFormat:@"multipart/form-data; charset=%@; boundary=%@", charset, boundary] 
-        forHTTPHeaderField:@"Content-Type"];
-    
-    [self.request setValue:[NSString stringWithFormat:@"%d", [body length]] forHTTPHeaderField:@"Content-Length"];
-  }
-  
-  return body;
-}
+- (NSInputStream*) bodyStream {
 
+    if ([self.filesToBePosted count] + [self.dataToBePosted count]) {
+        BZMultipartStream *body = [[BZMultipartStream alloc] initWithEncoding:[self stringEncoding]];
+        [body appendFields:self.fieldsToBePosted];
+        
+        [self.dataToBePosted enumerateObjectsUsingBlock:^(NSDictionary* data, NSUInteger idx, BOOL *stop) {
+            [body appendData:[data objectForKey:@"data"] forKey:[data objectForKey:@"name"] withMimeType:[data objectForKey:@"mimetype"]];        
+        }];
+        
+        [self.filesToBePosted enumerateObjectsUsingBlock:^(NSDictionary* file, NSUInteger idx, BOOL *stop) {        
+            [body appendFile:[file objectForKey:@"filepath"] forKey:[file objectForKey:@"name"] withMimeType:[file objectForKey:@"mimetype"]];        
+        }];
+                
+        NSString *charset = (__bridge NSString *)CFStringConvertEncodingToIANACharSetName(CFStringConvertNSStringEncodingToEncoding(self.stringEncoding));        
+        [self.request setValue:[NSString stringWithFormat:@"multipart/form-data; charset=%@; boundary=%@", charset, body.boundary] forHTTPHeaderField:@"Content-Type"];        
+        [self.request setValue:[[NSNumber numberWithUnsignedLong:body.length] stringValue] forHTTPHeaderField:@"Content-Length"];
+        
+        return body;
+    } 
+    
+    return [NSInputStream inputStreamWithData:[[self encodedPostDataString] dataUsingEncoding:self.stringEncoding]];            
+}
 
 -(void) setCacheHandler:(MKNKResponseBlock) cacheHandler {
   
@@ -817,9 +771,8 @@
   
   if(!self.isCancelled) {
     
-    if ([self.request.HTTPMethod isEqualToString:@"POST"] || [self.request.HTTPMethod isEqualToString:@"PUT"]) {            
-      
-      [self.request setHTTPBody:[self bodyData]];
+    if ([self.request.HTTPMethod isEqualToString:@"POST"] || [self.request.HTTPMethod isEqualToString:@"PUT"]) {                    
+        self.request.HTTPBodyStream = [self bodyStream];
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{
