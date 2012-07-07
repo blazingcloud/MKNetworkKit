@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name     = 'MKNetworkKit'
-  s.version  = '0.83'
+  s.version  = '0.84'
   s.license  = 'MIT'
   s.summary  = 'Full ARC based Networking Kit for iOS 4+ devices'
   s.homepage = 'https://github.com/MugunthKumar/MKNetworkKit'
@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   files = FileList['MKNetworkKit/*.{h,m}', 'MKNetworkKit/Categories/*.{h,m}']
   if config.ios?
     files.exclude(/NSAlert/)
-    s.frameworks = 'CFNetwork', 'Security'
+    s.frameworks = 'CFNetwork', 'Security', 'MobileCoreServices'
   else
     files.exclude(/UIAlertView/)
     s.frameworks = 'CoreServices', 'Security'
