@@ -40,6 +40,9 @@
 @end
 
 @implementation BZMultipartStream {
+    
+    long sid;
+    
     NSMutableDictionary* properties;
 
     NSStringEncoding encoding;
@@ -56,6 +59,11 @@
 
 - (id) initWithEncoding:(NSStringEncoding)enc {
     if (self = [super init]) {
+        
+        static long streamID = 0;
+        
+        sid = streamID++;
+        
         properties = [[NSMutableDictionary alloc] init];
 
         encoding = enc;
@@ -188,7 +196,7 @@
 }
 
 - (NSString*) description {
-    return [[NSString alloc] initWithFormat:@"<%p> %lu/%lu kB", self, sent / 1000, length / 1000];
+    return [[NSString alloc] initWithFormat:@"<%d> %lu/%lu kB", sid, sent / 1000, length / 1000];
 }
 
 @end
