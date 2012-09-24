@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.osx.source_files =  files.dup.exclude(/UIAlertView/)
   s.ios.frameworks   =  'CFNetwork', 'Security', 'MobileCoreServices'
   s.osx.frameworks   =  'CoreServices', 'Security'
-  
+
   s.clean_paths  = 'MKNetworkKit-*', '*-Demo', 'SampleImage.jpg'
   s.requires_arc = true
 
@@ -37,7 +37,7 @@ Pod::Spec.new do |s|
       file.puts(%{#ifdef __OBJC__\n#import "MKNetworkKit.h"\n#endif})
     end
   end
-  
+
   s.license  = { :type => 'MIT',
                  :text => 'MKNetworkKit is licensed under MIT License
 Permission is hereby granted, free of charge, to any person obtaining a copy

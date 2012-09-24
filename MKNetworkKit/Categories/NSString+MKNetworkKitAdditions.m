@@ -35,11 +35,11 @@
     CC_MD5( cStr, (unsigned int) strlen(cStr), result);
     return [NSString stringWithFormat:
 			@"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
-			result[0], result[1], result[2], result[3], 
+			result[0], result[1], result[2], result[3],
 			result[4], result[5], result[6], result[7],
 			result[8], result[9], result[10], result[11],
 			result[12], result[13], result[14], result[15]
-			];      
+			];
 }
 
 + (NSString*) uniqueString
@@ -51,30 +51,30 @@
 }
 
 - (NSString*) urlEncodedString {
-    
-    CFStringRef encodedCFString = CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, 
-                                                                        (__bridge CFStringRef) self, 
+
+    CFStringRef encodedCFString = CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+                                                                        (__bridge CFStringRef) self,
                                                                         nil,
-                                                                        CFSTR("?!@#$^&%*+,:;='\"`<>()[]{}/\\| "), 
+                                                                        CFSTR("?!@#$^&%*+,:;='\"`<>()[]{}/\\| "),
                                                                         kCFStringEncodingUTF8);
-    
-    NSString *encodedString = [[NSString alloc] initWithString:(__bridge_transfer NSString*) encodedCFString];    
+
+    NSString *encodedString = [[NSString alloc] initWithString:(__bridge_transfer NSString*) encodedCFString];
 
     if(!encodedString)
-        encodedString = @"";    
-    
+        encodedString = @"";
+
     return encodedString;
 }
 
 - (NSString*) urlDecodedString {
 
-    CFStringRef decodedCFString = CFURLCreateStringByReplacingPercentEscapesUsingEncoding(kCFAllocatorDefault, 
-                                                                                          (__bridge CFStringRef) self, 
+    CFStringRef decodedCFString = CFURLCreateStringByReplacingPercentEscapesUsingEncoding(kCFAllocatorDefault,
+                                                                                          (__bridge CFStringRef) self,
                                                                                           CFSTR(""),
                                                                                           kCFStringEncodingUTF8);
-    
+
     // We need to replace "+" with " " because the CF method above doesn't do it
-    NSString *decodedString = [[NSString alloc] initWithString:(__bridge_transfer NSString*) decodedCFString];    
+    NSString *decodedString = [[NSString alloc] initWithString:(__bridge_transfer NSString*) decodedCFString];
     return (!decodedString) ? @"" : [decodedString stringByReplacingOccurrencesOfString:@"+" withString:@" "];
 }
 

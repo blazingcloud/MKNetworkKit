@@ -1,20 +1,19 @@
 //
-//  BZMultipartStream.h
+//  BZStreamBuilder.h
 //  Pods
 //
-//  Created by Mason Glaves on 7/5/12.
-//  Copyright (c) 2012 Masonsoft. All rights reserved.
+//  Created by Mason on 9/6/12.
+//
 //
 
 #import <Foundation/Foundation.h>
 
-@interface BZMultipartStream : NSInputStream
+@interface BZStreamBuilder : NSObject
 
-@property (nonatomic, assign, readonly) NSStreamStatus streamStatus;
-@property (nonatomic, strong, readonly) NSError* streamError;
 @property (nonatomic, strong, readonly) NSString* boundary;
-
-@property (nonatomic, assign, readonly) unsigned long length;
+@property (nonatomic, strong, readonly) NSString* tmpfile;
+@property (nonatomic, assign, readonly) unsigned long long length;
+@property (nonatomic, strong, readonly) NSInputStream* stream;
 
 - (id) initWithEncoding:(NSStringEncoding)enc;
 
@@ -22,5 +21,8 @@
 - (void) appendField:(NSString*)value forKey:(NSString*)key;
 - (void) appendData:(NSData*)value forKey:(NSString*)key withMimeType:(NSString*)mime;
 - (void) appendFile:(NSString*)path forKey:(NSString*)key withMimeType:(NSString*)mime;
+
+- (void) build;
+
 
 @end

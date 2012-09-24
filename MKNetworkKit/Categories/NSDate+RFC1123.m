@@ -14,8 +14,8 @@
 +(NSDate*)dateFromRFC1123:(NSString*)value_
 {
     if(value_ == nil)
-        return nil;    
-    
+        return nil;
+
     __strong static NSDateFormatter *rfc1123 = nil;
     if (!rfc1123) {
         static dispatch_once_t oncePredicate;
@@ -29,7 +29,7 @@
     NSDate *ret = [rfc1123 dateFromString:value_];
     if(ret != nil)
         return ret;
-    
+
     static NSDateFormatter *rfc850 = nil;
     if(!rfc850)
     {
@@ -44,13 +44,13 @@
     ret = [rfc850 dateFromString:value_];
     if(ret != nil)
         return ret;
-    
+
     static NSDateFormatter *asctime = nil;
     if(!asctime)
     {
         static dispatch_once_t oncePredicate;
         dispatch_once(&oncePredicate, ^{
-            
+
             asctime = [[NSDateFormatter alloc] init];
             asctime.locale = rfc1123.locale;
             asctime.timeZone = rfc1123.timeZone;
