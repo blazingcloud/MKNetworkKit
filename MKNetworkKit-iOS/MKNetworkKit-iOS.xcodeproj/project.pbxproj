@@ -28,6 +28,8 @@
 		ABB5C2CE148B40910056D3E9 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABB5C2CC148B40910056D3E9 /* CFNetwork.framework */; };
 		ABDC97461498A6DE0034CEBE /* NSData+Base64.h in Headers */ = {isa = PBXBuildFile; fileRef = ABDC97441498A6DE0034CEBE /* NSData+Base64.h */; };
 		ABDC97471498A6DE0034CEBE /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDC97451498A6DE0034CEBE /* NSData+Base64.m */; };
+		CABC2EC71635BAC600D50092 /* NSStream+BoundPairAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = CABC2EC51635BAC600D50092 /* NSStream+BoundPairAdditions.h */; };
+		CABC2EC81635BAC600D50092 /* NSStream+BoundPairAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CABC2EC61635BAC600D50092 /* NSStream+BoundPairAdditions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +56,8 @@
 		ABB5C2CC148B40910056D3E9 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		ABDC97441498A6DE0034CEBE /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
 		ABDC97451498A6DE0034CEBE /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
+		CABC2EC51635BAC600D50092 /* NSStream+BoundPairAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSStream+BoundPairAdditions.h"; sourceTree = "<group>"; };
+		CABC2EC61635BAC600D50092 /* NSStream+BoundPairAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSStream+BoundPairAdditions.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +129,8 @@
 		ABB5C2A9148B3B360056D3E9 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				CABC2EC51635BAC600D50092 /* NSStream+BoundPairAdditions.h */,
+				CABC2EC61635BAC600D50092 /* NSStream+BoundPairAdditions.m */,
 				AB3A3096148F0A3B00D06246 /* NSDate+RFC1123.h */,
 				AB3A3097148F0A3B00D06246 /* NSDate+RFC1123.m */,
 				ABDC97441498A6DE0034CEBE /* NSData+Base64.h */,
@@ -174,6 +180,7 @@
 				ABB5C2C4148B3B360056D3E9 /* Reachability.h in Headers */,
 				AB3A3098148F0A3B00D06246 /* NSDate+RFC1123.h in Headers */,
 				ABDC97461498A6DE0034CEBE /* NSData+Base64.h in Headers */,
+				CABC2EC71635BAC600D50092 /* NSStream+BoundPairAdditions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,6 +243,7 @@
 				ABB5C2C5148B3B360056D3E9 /* Reachability.m in Sources */,
 				AB3A3099148F0A3B00D06246 /* NSDate+RFC1123.m in Sources */,
 				ABDC97471498A6DE0034CEBE /* NSData+Base64.m in Sources */,
+				CABC2EC81635BAC600D50092 /* NSStream+BoundPairAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

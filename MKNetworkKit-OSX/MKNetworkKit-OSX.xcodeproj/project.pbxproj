@@ -26,6 +26,8 @@
 		ABB5C2A8148B3B160056D3E9 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB5C29A148B3B160056D3E9 /* Reachability.m */; };
 		ABDC974A1498A8B60034CEBE /* NSData+Base64.h in Headers */ = {isa = PBXBuildFile; fileRef = ABDC97481498A8B60034CEBE /* NSData+Base64.h */; };
 		ABDC974B1498A8B60034CEBE /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDC97491498A8B60034CEBE /* NSData+Base64.m */; };
+		CABC2ECC1635BB0600D50092 /* NSStream+BoundPairAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = CABC2ECA1635BB0600D50092 /* NSStream+BoundPairAdditions.h */; };
+		CABC2ECD1635BB0600D50092 /* NSStream+BoundPairAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CABC2ECB1635BB0600D50092 /* NSStream+BoundPairAdditions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +55,8 @@
 		ABB5C29A148B3B160056D3E9 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		ABDC97481498A8B60034CEBE /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
 		ABDC97491498A8B60034CEBE /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
+		CABC2ECA1635BB0600D50092 /* NSStream+BoundPairAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSStream+BoundPairAdditions.h"; sourceTree = "<group>"; };
+		CABC2ECB1635BB0600D50092 /* NSStream+BoundPairAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSStream+BoundPairAdditions.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +135,8 @@
 		ABB5C28C148B3B160056D3E9 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				CABC2ECA1635BB0600D50092 /* NSStream+BoundPairAdditions.h */,
+				CABC2ECB1635BB0600D50092 /* NSStream+BoundPairAdditions.m */,
 				ABDC97481498A8B60034CEBE /* NSData+Base64.h */,
 				ABDC97491498A8B60034CEBE /* NSData+Base64.m */,
 				AB3A309A148F0A4400D06246 /* NSDate+RFC1123.h */,
@@ -172,6 +178,7 @@
 				AB8AF0CA148B445200ECE140 /* NSAlert+MKNetworkKitAdditions.h in Headers */,
 				AB3A309C148F0A4400D06246 /* NSDate+RFC1123.h in Headers */,
 				ABDC974A1498A8B60034CEBE /* NSData+Base64.h in Headers */,
+				CABC2ECC1635BB0600D50092 /* NSStream+BoundPairAdditions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -234,6 +241,7 @@
 				AB8AF0CB148B445200ECE140 /* NSAlert+MKNetworkKitAdditions.m in Sources */,
 				AB3A309D148F0A4400D06246 /* NSDate+RFC1123.m in Sources */,
 				ABDC974B1498A8B60034CEBE /* NSData+Base64.m in Sources */,
+				CABC2ECD1635BB0600D50092 /* NSStream+BoundPairAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
