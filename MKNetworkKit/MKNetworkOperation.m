@@ -727,8 +727,6 @@ enum {
         NSString *extension = [filePath.pathExtension lowercaseString];
         if ( [extension isEqual:@"png"] ) {
             contentType = @"image/png";
-        } else if ( [extension isEqual:@"bzd"] ) {
-            contentType = @"image/jpeg";
         } else if ( [extension isEqual:@"jpg"] ) {
             contentType = @"image/jpeg";
         } else if ( [extension isEqual:@"gif"] ) {
