@@ -746,7 +746,7 @@ enum {
                          // empty preamble
                          "\r\n"
                          "--%@\r\n"
-                         "Content-Disposition: form-data; name=\"fileContents\"; filename=\"%@\"\r\n"
+                         "Content-Disposition: form-data; name=\"file\"; filename=\"%@\"\r\n"
                          "Content-Type: %@\r\n"
                          "\r\n",
                          boundaryStr,
