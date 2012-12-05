@@ -467,9 +467,10 @@ enum {
 }
 
 -(void) dealloc {
-
   [_connection cancel];
   _connection = nil;
+  _producerStream.delegate = nil;
+  [_producerStream close];
 }
 
 -(void) updateHandlersFromOperation:(MKNetworkOperation*) operation {
