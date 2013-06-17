@@ -17,11 +17,9 @@ Pod::Spec.new do |s|
 #  s.clean_paths  = 'MKNetworkKit-*', '*-Demo', 'SampleImage.jpg'
   s.requires_arc = true
 
-  def s.copy_header_mapping(from)
-    from.sub('MKNetworkKit/', '')
-  end
+  s.header_mappings_dir =  'MKNetworkKit/'
 
-  s.dependency 'Reachability', '~> 3.0'
+  s.dependency 'Reachability', '~> 3.1.0'
 
   def s.post_install(target)
     # Fix an import statement which is used inconsistently in MKNetworkKit
