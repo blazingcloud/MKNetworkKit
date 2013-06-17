@@ -13,7 +13,8 @@ Pod::Spec.new do |s|
   s.ios.frameworks   =  'CFNetwork', 'Security', 'MobileCoreServices'
   s.osx.frameworks   =  'CoreServices', 'Security'
 
-  s.clean_paths  = 'MKNetworkKit-*', '*-Demo', 'SampleImage.jpg'
+# Clean paths are deprecated. CocoaPods now cleans unused files by default. Use the `preserve_paths` attribute if needed.
+#  s.clean_paths  = 'MKNetworkKit-*', '*-Demo', 'SampleImage.jpg'
   s.requires_arc = true
 
   def s.copy_header_mapping(from)
